@@ -10,3 +10,21 @@ module.directive('clock', function() {
 		controllerAs: 'clock'
 	}
 });
+
+module.directive('resources', function() {
+	return {
+		restrict: 'E',
+		templateUrl: 'resources/resources.html',
+		controller: 'ResourcesController',
+		controllerAs: 'resources'
+	}
+});
+
+module.directive('peasants', function() {
+	return {
+		restrict: 'E',
+		templateUrl: 'peasants/peasants.html',
+		controller: 'PeasantsController',
+		controllerAs: 'peasants'
+	}
+});
