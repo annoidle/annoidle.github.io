@@ -29,7 +29,9 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script src="bower_components/angular/angular.js"></script>
+    <script src="init.js"></script>
     <script src="clock/clock.js"></script>
+    <script src="index.js"></script>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
@@ -39,8 +41,7 @@
 <body>
     <!-- Page Content -->
     <div class="container">
-        <div class="row" ng-include="'clock/clock.html'">
-        </div>
+        <clock></clock>
         <!-- /.row -->
     </div>
     <!-- /.container -->
