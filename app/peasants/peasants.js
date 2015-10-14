@@ -1,15 +1,21 @@
 var module = angular.module('indexApp');
 
-module.controller('PeasantsController', function() {
-	this.houses = 0;
+module.controller('PeasantsController', function($scope, PlayerData) {
+	PlayerData.registerHouses(this);
 
 	this.buyHouse = function(housesToBuy) {
-		if(isNaN(housesToBuy)) {
+		if (isNaN(housesToBuy)) {
 			return;
 		}
-		if(parseInt(housesToBuy) != housesToBuy) {
+		if (parseInt(housesToBuy) != housesToBuy) {
 			return;
 		}
-		this.houses = parseInt(this.houses) + parseInt(housesToBuy);
+		PlayerData.buyHouses(parseInt(housesToBuy));
 	}
+
+	this.housesUpdated = function() {
+		this.houses = PlayerData.getHouses();
+	}
+
+	this.housesUpdated();
 });
