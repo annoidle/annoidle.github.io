@@ -1,6 +1,6 @@
 'use strict';
 
-var module = angular.module('indexApp');
+var module = angular.module('indexApp.clock', []);
 
 module.controller('ClockController', function($timeout, $scope) {
 	var tick = function() {

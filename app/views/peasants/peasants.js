@@ -1,4 +1,4 @@
-var module = angular.module('indexApp');
+var module = angular.module('indexApp.peasants', ['indexApp.game']);
 
 module.controller('PeasantsController', function($scope, PlayerData) {
 	PlayerData.registerHouses(this);

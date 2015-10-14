@@ -1,4 +1,4 @@
-var module = angular.module('indexApp');
+var module = angular.module('indexApp.resources', ['indexApp.game']);
 
 module.controller('ResourcesController', function(PlayerData) {
 	this.woodUpdated = function() {

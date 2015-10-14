@@ -1,6 +1,6 @@
 'use strict';
 
-var module = angular.module('indexApp');
+var module = angular.module('indexApp.game', []);
 module.service('PlayerData', function() {
 
 	var gold = 3000;
