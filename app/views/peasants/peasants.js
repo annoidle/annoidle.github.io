@@ -1,6 +1,6 @@
 var module = angular.module('indexApp.peasants', ['indexApp.game']);
 
-module.controller('PeasantsController', function($scope, PlayerData) {
+module.controller('PeasantsController', ['$scope', 'PlayerData', function($scope, PlayerData) {
 
 	this.buyHouse = function(housesToBuy) {
 		if (isNaN(housesToBuy)) {
@@ -17,5 +17,5 @@ module.controller('PeasantsController', function($scope, PlayerData) {
 	}
 
 	PlayerData.addObserver('houses', this.housesUpdated);
-	this.housesUpdated();
-});
+	this.houses = PlayerData.getHouses();
+}]);

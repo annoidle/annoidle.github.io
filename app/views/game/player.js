@@ -9,12 +9,11 @@ module.service('PlayerData', function() {
 	var wood = 3000;
 	var houses = 0;
 	var woodCostForAHouse = 3;
+
 	var observers = {
-		'wood':[],
-		'houses':[],
+		'wood': [],
+		'houses': [],
 	};
-	var registeredForHouses = [];
-	var registeredForWood = [];
 
 	var notify = function(variable) {
 		observers[variable].forEach(function(notifyMethod) {
@@ -44,7 +43,7 @@ module.service('PlayerData', function() {
 		getHouses: function() {
 			return houses;
 		},
-		addObserver: function(variable, notifyMethod){
+		addObserver: function(variable, notifyMethod) {
 			observers[variable].push(notifyMethod);
 		},
 	}

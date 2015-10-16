@@ -1,25 +1,31 @@
 'use strict';
 
-describe("A suite", function() {
+describe("Player suite", function() {
+	var playerData;
 
-	beforeEach(angular.mock.module('indexApp.game'));
+	beforeEach(function() {
+		angular.mock.module('indexApp.game');
+		inject(function(PlayerData) {
+			playerData = PlayerData;
+		});
+	});
 
 	describe("At the start of the application", function() {
-		it("player has 3k GOLD", inject(function(PlayerData) {
-			expect(PlayerData.getGold()).toBe(3000);
-		}));
-		it("player has 3k FOOD", inject(function(PlayerData) {
-			expect(PlayerData.getFood()).toBe(3000);
-		}));
-		it("player has 3k WOOD", inject(function(PlayerData) {
-			expect(PlayerData.getWood()).toBe(3000);
-		}));
-		it("player has 3k TOOLS", inject(function(PlayerData) {
-			expect(PlayerData.getTools()).toBe(3000);
-		}));
-		it("player has 0 HOUSES", inject(function(PlayerData) {
-			expect(PlayerData.getHouses()).toBe(0);
-		}));
+		it("player has 3k GOLD", function() {
+			expect(playerData.getGold()).toBe(3000);
+		});
+		it("player has 3k FOOD", function() {
+			expect(playerData.getFood()).toBe(3000);
+		});
+		it("player has 3k WOOD", function() {
+			expect(playerData.getWood()).toBe(3000);
+		});
+		it("player has 3k TOOLS", function() {
+			expect(playerData.getTools()).toBe(3000);
+		});
+		it("player has 0 HOUSES", function() {
+			expect(playerData.getHouses()).toBe(0);
+		});
 	});
 
 	describe("When you buy a house", function() {
@@ -44,30 +50,30 @@ describe("A suite", function() {
 		});
 
 
-		it("player gain a house", inject(function(PlayerData) {
-			PlayerData.buyHouses(1);
-			expect(PlayerData.getHouses()).toBe(1);
-		}));
+		it("player gain a house", function() {
+			playerData.buyHouses(1);
+			expect(playerData.getHouses()).toBe(1);
+		});
 
-		it("player loses 3 WOOD", inject(function(PlayerData) {
-			PlayerData.buyHouses(1);
-			expect(PlayerData.getWood()).toBe(3000 - 3);
-		}));
+		it("player loses 3 WOOD", function() {
+			playerData.buyHouses(1);
+			expect(playerData.getWood()).toBe(3000 - 3);
+		});
 
-		it("alerts registed HOUSES observers", inject(function(PlayerData) {
-			PlayerData.addObserver('houses', alertable.housesUpdated);
-			PlayerData.addObserver('houses', alertable2.housesUpdated);
-			PlayerData.buyHouses(1);
-			 expect(alertable.housesUpdated).toHaveBeenCalled();
-			 expect(alertable2.housesUpdated).toHaveBeenCalled();
-		}));
+		it("alerts registed HOUSES observers", function() {
+			playerData.addObserver('houses', alertable.housesUpdated);
+			playerData.addObserver('houses', alertable2.housesUpdated);
+			playerData.buyHouses(1);
+			expect(alertable.housesUpdated).toHaveBeenCalled();
+			expect(alertable2.housesUpdated).toHaveBeenCalled();
+		});
 
-		it("alerts registed WOOD observers", inject(function(PlayerData) {
-			PlayerData.addObserver('wood', alertable.woodUpdated);
-			PlayerData.addObserver('wood', alertable2.woodUpdated);
-			PlayerData.buyHouses(1);
-			 expect(alertable.woodUpdated).toHaveBeenCalled();
-			 expect(alertable2.woodUpdated).toHaveBeenCalled();
-		}));
+		it("alerts registed WOOD observers", function() {
+			playerData.addObserver('wood', alertable.woodUpdated);
+			playerData.addObserver('wood', alertable2.woodUpdated);
+			playerData.buyHouses(1);
+			expect(alertable.woodUpdated).toHaveBeenCalled();
+			expect(alertable2.woodUpdated).toHaveBeenCalled();
+		});
 	});
 });
