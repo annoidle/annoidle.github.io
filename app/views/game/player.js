@@ -9,17 +9,16 @@ module.service('PlayerData', function() {
 	var wood = 3000;
 	var houses = 0;
 	var woodCostForAHouse = 3;
+	var observers = {
+		'wood':[],
+		'houses':[],
+	};
 	var registeredForHouses = [];
 	var registeredForWood = [];
 
-	var alertHouses = function() {
-		registeredForHouses.forEach(function(alertable) {
-			alertable.housesUpdated();
-		});
-	};
-	var alertWood = function() {
-		registeredForWood.forEach(function(alertable) {
-			alertable.woodUpdated();
+	var notify = function(variable) {
+		observers[variable].forEach(function(notifyMethod) {
+			notifyMethod();
 		});
 	};
 
@@ -27,8 +26,8 @@ module.service('PlayerData', function() {
 		buyHouses: function(numberOfHousesToBuy) {
 			houses = houses + numberOfHousesToBuy;
 			wood = wood - numberOfHousesToBuy * woodCostForAHouse;
-			alertHouses();
-			alertWood();
+			notify('houses');
+			notify('wood');
 		},
 		getGold: function() {
 			return gold;
@@ -45,11 +44,8 @@ module.service('PlayerData', function() {
 		getHouses: function() {
 			return houses;
 		},
-		registerHouses: function(alertable) {
-			registeredForHouses.push(alertable);
+		addObserver: function(variable, notifyMethod){
+			observers[variable].push(notifyMethod);
 		},
-		registerWood: function(alertable) {
-			registeredForWood.push(alertable);
-		}
 	}
 })

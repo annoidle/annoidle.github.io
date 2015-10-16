@@ -1,10 +1,10 @@
 var module = angular.module('indexApp.resources', ['indexApp.game']);
 
-module.controller('ResourcesController', function(PlayerData) {
+module.controller('ResourcesController', function($scope, PlayerData) {
 	this.woodUpdated = function() {
-		this.wood = PlayerData.getWood();
+		$scope.resources.wood = PlayerData.getWood();
 	}
-	PlayerData.registerWood(this);
+	PlayerData.addObserver('wood', this.woodUpdated);
 
 	this.gold = PlayerData.getGold();
 	this.food = PlayerData.getFood();

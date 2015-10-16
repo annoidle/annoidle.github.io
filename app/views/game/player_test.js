@@ -55,16 +55,16 @@ describe("A suite", function() {
 		}));
 
 		it("alerts registed HOUSES observers", inject(function(PlayerData) {
-			PlayerData.registerHouses(alertable);
-			PlayerData.registerHouses(alertable2);
+			PlayerData.addObserver('houses', alertable.housesUpdated);
+			PlayerData.addObserver('houses', alertable2.housesUpdated);
 			PlayerData.buyHouses(1);
 			 expect(alertable.housesUpdated).toHaveBeenCalled();
 			 expect(alertable2.housesUpdated).toHaveBeenCalled();
 		}));
 
 		it("alerts registed WOOD observers", inject(function(PlayerData) {
-			PlayerData.registerWood(alertable);
-			PlayerData.registerWood(alertable2);
+			PlayerData.addObserver('wood', alertable.woodUpdated);
+			PlayerData.addObserver('wood', alertable2.woodUpdated);
 			PlayerData.buyHouses(1);
 			 expect(alertable.woodUpdated).toHaveBeenCalled();
 			 expect(alertable2.woodUpdated).toHaveBeenCalled();
