@@ -76,4 +76,18 @@ describe("Player suite", function() {
 			expect(alertable2.woodUpdated).toHaveBeenCalled();
 		});
 	});
+
+	describe("When you buy a lumberjacks hut", function() {
+		it("gives you a lumberjacks hut", function() {
+			playerData.buyLumberjacksHuts(1);
+			expect(playerData.getLumberjacksHut()).toBe(1);
+		});
+		it("you lose 50 gold and 2 tools", function() {
+			playerData.buyLumberjacksHuts(1);
+			expect(playerData.getGold()).toBe(3000 - 50);
+			expect(playerData.getTools()).toBe(3000 - 2);
+		});
+	});
+
+
 });

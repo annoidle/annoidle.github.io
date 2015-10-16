@@ -8,11 +8,15 @@ module.service('PlayerData', function() {
 	var tools = 3000;
 	var wood = 3000;
 	var houses = 0;
+	var lumberjacksHuts = 0;
 	var woodCostForAHouse = 3;
 
 	var observers = {
 		'wood': [],
 		'houses': [],
+		'tools':[],
+		'gold':[],
+		'lumberjacksHuts':[]
 	};
 
 	var notify = function(variable) {
@@ -22,11 +26,22 @@ module.service('PlayerData', function() {
 	};
 
 	return {
+		buyLumberjacksHuts: function(numberToBuy) {
+			lumberjacksHuts += numberToBuy;
+			gold -= 50;
+			tools -= 2;
+			notify('tools');
+			notify('gold');
+			notify('lumberjacksHuts');
+		},
 		buyHouses: function(numberOfHousesToBuy) {
-			houses = houses + numberOfHousesToBuy;
-			wood = wood - numberOfHousesToBuy * woodCostForAHouse;
+			houses += numberOfHousesToBuy;
+			wood -= numberOfHousesToBuy * woodCostForAHouse;
 			notify('houses');
 			notify('wood');
+		},
+		getLumberjacksHut: function() {
+			return lumberjacksHuts;
 		},
 		getGold: function() {
 			return gold;
