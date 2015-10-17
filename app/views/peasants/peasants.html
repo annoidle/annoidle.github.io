@@ -1,8 +1,8 @@
 <div class="col-lg-12 text-center">
 	<h1>Peasants:</h1>
-	<em> You have {{peasants.houses}} houses.</em>
+	<em> You have {{peasants.house}} houses.</em>
 	<em>
       <input type="text" ng-model="housesToBuy" placeholder="X">
-      <button ng-click="peasants.buyHouse(housesToBuy)">Buy Peasants Houses</button>
+      <button ng-click="peasants.buy('house', housesToBuy)">Buy Peasants Houses</button>
     </em>
 </div>

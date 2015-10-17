@@ -3,10 +3,9 @@ var module = angular.module('indexApp.peasants', ['indexApp.game']);
 module.controller('PeasantsController', ['$scope', 'PlayerData', function($scope, PlayerData) {
 
 	var controller = this;
-	this.house = -1;
-	this.lumberjacksHut = -1;
+
 	var isPositiveInteger = function(number) {
-		return !isNaN(number) && parseInt(number) === number;
+		return !isNaN(number) && parseInt(number) == number;
 	};
 
 	this.buy = function(building, numberToBuy) {

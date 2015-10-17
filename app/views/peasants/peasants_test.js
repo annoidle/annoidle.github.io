@@ -28,5 +28,9 @@ describe("Peasant suite", function() {
 			peasantsCtrl.buy('house', 3);
 			expect(playerData.buy).toHaveBeenCalledWith('house', 3);
 		});
+		it("updates the number of houses", function() {
+			peasantsCtrl.buy('house', 3);
+			expect(peasantsCtrl.house).toBe(3);
+		});
 	});
 });
