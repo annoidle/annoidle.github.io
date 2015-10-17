@@ -3,20 +3,22 @@
 var module = angular.module('indexApp.game', []);
 module.service('PlayerData', function() {
 
-	var gold = 3000;
-	var food = 3000;
-	var tools = 3000;
-	var wood = 3000;
-	var houses = 0;
-	var lumberjacksHuts = 0;
-	var woodCostForAHouse = 3;
+	var player = {
+		gold: 3000,
+		food: 3000,
+		tools: 3000,
+		wood: 3000,
+		house: 0,
+		lumberjacksHut: 0,
+		woodCostForAHouse: 3
+	};
 
 	var observers = {
 		'wood': [],
-		'houses': [],
-		'tools':[],
-		'gold':[],
-		'lumberjacksHuts':[]
+		'house': [],
+		'tools': [],
+		'gold': [],
+		'lumberjacksHut': []
 	};
 
 	var notify = function(variable) {
@@ -25,38 +27,46 @@ module.service('PlayerData', function() {
 		});
 	};
 
-	return {
-		buyLumberjacksHuts: function(numberToBuy) {
-			lumberjacksHuts += numberToBuy;
-			gold -= 50;
-			tools -= 2;
-			notify('tools');
-			notify('gold');
-			notify('lumberjacksHuts');
+	var buildings = {
+		house: {
+			wood: 3
 		},
-		buyHouses: function(numberOfHousesToBuy) {
-			houses += numberOfHousesToBuy;
-			wood -= numberOfHousesToBuy * woodCostForAHouse;
-			notify('houses');
-			notify('wood');
+		lumberjacksHut: {
+			tools: 2,
+			gold: 50
+		}
+	}
+
+	var buy = function(buildingName, number) {
+			player[buildingName] += number;
+			for (var key in buildings[buildingName]) {
+				player[key] = player[key] - buildings[buildingName][key] * number;
+				notify(key);
+			}
+			notify(buildingName);
+	}
+
+	return {
+		buy : function(buildingName, number) {
+			buy(buildingName, number);
 		},
 		getLumberjacksHut: function() {
-			return lumberjacksHuts;
+			return player.lumberjacksHut;
 		},
 		getGold: function() {
-			return gold;
+			return player.gold;
 		},
 		getFood: function() {
-			return food;
+			return player.food;
 		},
 		getTools: function() {
-			return tools;
+			return player.tools;
 		},
 		getWood: function() {
-			return wood;
+			return player.wood;
 		},
 		getHouses: function() {
-			return houses;
+			return player.house;
 		},
 		addObserver: function(variable, notifyMethod) {
 			observers[variable].push(notifyMethod);

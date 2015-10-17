@@ -14,7 +14,7 @@ describe("Peasant suite", function() {
 			});
 		});
 		scope.peasants = peasantsCtrl;
-		spyOn(playerData, 'buyHouses').and.callThrough();
+		spyOn(playerData, 'buy').and.callThrough();
 	});
 
 	describe("At the start of the application", function() {
@@ -26,7 +26,7 @@ describe("Peasant suite", function() {
 	describe("When I buy houses", function() {
 		it("calls playerData with 3 if I bought 3 houses", function() {
 			peasantsCtrl.buyHouse(3);
-			expect(playerData.buyHouses).toHaveBeenCalledWith(3);
+			expect(playerData.buy).toHaveBeenCalledWith('house', 3);
 		});
 	});
 });
