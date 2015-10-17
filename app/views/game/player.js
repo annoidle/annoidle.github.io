@@ -6,7 +6,7 @@ module.service('PlayerData', function() {
 	var player = {
 		gold: 3000,
 		food: 3000,
-		tools: 3000,
+		tool: 3000,
 		wood: 3000,
 		house: 0,
 		lumberjacksHut: 0,
@@ -16,7 +16,7 @@ module.service('PlayerData', function() {
 	var observers = {
 		'wood': [],
 		'house': [],
-		'tools': [],
+		'tool': [],
 		'gold': [],
 		'lumberjacksHut': []
 	};
@@ -32,44 +32,32 @@ module.service('PlayerData', function() {
 			wood: 3
 		},
 		lumberjacksHut: {
-			tools: 2,
+			tool: 2,
 			gold: 50
 		}
 	}
 
 	var buy = function(buildingName, number) {
-			player[buildingName] += number;
-			for (var key in buildings[buildingName]) {
-				player[key] = player[key] - buildings[buildingName][key] * number;
-				notify(key);
-			}
-			notify(buildingName);
+		player[buildingName] += number;
+		for (var key in buildings[buildingName]) {
+			player[key] = player[key] - buildings[buildingName][key] * number;
+			notify(key);
+		}
+		notify(buildingName);
 	}
 
 	return {
-		buy : function(buildingName, number) {
+		buy: function(buildingName, number) {
 			buy(buildingName, number);
 		},
-		getLumberjacksHut: function() {
-			return player.lumberjacksHut;
-		},
-		getGold: function() {
-			return player.gold;
-		},
-		getFood: function() {
-			return player.food;
-		},
-		getTools: function() {
-			return player.tools;
-		},
-		getWood: function() {
-			return player.wood;
-		},
-		getHouses: function() {
-			return player.house;
+		get: function(attributeName) {
+			return player[attributeName];
 		},
 		addObserver: function(variable, notifyMethod) {
 			observers[variable].push(notifyMethod);
 		},
+		getBuildings: function(){
+			return Object.keys(buildings);
+		}
 	}
 })

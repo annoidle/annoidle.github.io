@@ -19,13 +19,13 @@ describe("Peasant suite", function() {
 
 	describe("At the start of the application", function() {
 		it("should initialise the number of houses properly", function() {
-			expect(peasantsCtrl.houses).toBe(0);
+			expect(peasantsCtrl.house).toBe(0);
 		});
 	});
 
 	describe("When I buy houses", function() {
 		it("calls playerData with 3 if I bought 3 houses", function() {
-			peasantsCtrl.buyHouse(3);
+			peasantsCtrl.buy('house', 3);
 			expect(playerData.buy).toHaveBeenCalledWith('house', 3);
 		});
 	});

@@ -2,20 +2,26 @@ var module = angular.module('indexApp.peasants', ['indexApp.game']);
 
 module.controller('PeasantsController', ['$scope', 'PlayerData', function($scope, PlayerData) {
 
-	this.buyHouse = function(housesToBuy) {
-		if (isNaN(housesToBuy)) {
-			return;
+	var controller = this;
+	this.house = -1;
+	this.lumberjacksHut = -1;
+	var isPositiveInteger = function(number) {
+		return !isNaN(number) && parseInt(number) === number;
+	};
+
+	this.buy = function(building, numberToBuy) {
+		if (isPositiveInteger(numberToBuy)) {
+			PlayerData.buy(building, parseInt(numberToBuy));
 		}
-		if (parseInt(housesToBuy) != housesToBuy) {
-			return;
-		}
-		PlayerData.buy('house', parseInt(housesToBuy));
 	}
 
-	this.housesUpdated = function() {
-		$scope.peasants.houses = PlayerData.getHouses();
-	}
+	PlayerData.getBuildings().forEach(function(building) {
+		var functionName = building + 'Updated';
+		controller[functionName] = function() {
+			$scope.peasants[building] = PlayerData.get(building);
+		};
+		PlayerData.addObserver(building, controller[functionName]);
 
-	PlayerData.addObserver('house', this.housesUpdated);
-	this.houses = PlayerData.getHouses();
+		controller[building] = PlayerData.get(building);
+	});
 }]);
