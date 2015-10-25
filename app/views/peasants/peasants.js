@@ -1,6 +1,6 @@
 var module = angular.module('indexApp.peasants', ['indexApp.game']);
 
-module.controller('PeasantsController', ['$scope', 'PlayerData', function($scope, PlayerData) {
+module.controller('PeasantsController', ['$scope', 'PlayerData', 'Buildings', function($scope, PlayerData, Buildings) {
 
 	var controller = this;
 
@@ -14,13 +14,15 @@ module.controller('PeasantsController', ['$scope', 'PlayerData', function($scope
 		}
 	}
 
-	PlayerData.getBuildings().forEach(function(building) {
+	this.buildings = Buildings.getBuildings();
+
+	this.buildings.forEach(function(building) {
 		var functionName = building + 'Updated';
 		controller[functionName] = function() {
-			$scope.peasants[building] = PlayerData.get(building);
+			$scope.peasants[building] = PlayerData.getBuilding(building);
 		};
 		PlayerData.addObserver(building, controller[functionName]);
 
-		controller[building] = PlayerData.get(building);
+		controller[building] = PlayerData.getBuilding(building);
 	});
 }]);
