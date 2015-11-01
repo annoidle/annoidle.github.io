@@ -1,21 +1,21 @@
 'use strict';
 
 describe("Resources suite", function() {
-	var scope, resourceCtrl, playerData, buildings;
+	var scope, resourceCtrl, player, buildings;
 
 	beforeEach(function() {
 		angular.mock.module('indexApp.resources');
 
-		inject(function($rootScope, $controller, PlayerData, Buildings) {
+		inject(function($rootScope, $controller, Player, Buildings) {
 			scope = $rootScope.$new();
-			playerData = PlayerData;
+			player = Player;
 			buildings = Buildings;
 			resourceCtrl = $controller('ResourcesController', {
 				$scope: scope
 			});
 		});
 		scope.resources = resourceCtrl;
-		spyOn(playerData, 'addObserver').and.callThrough();
+		spyOn(player, 'addObserver').and.callThrough();
 	});
 
 	describe("At the start of the application", function() {

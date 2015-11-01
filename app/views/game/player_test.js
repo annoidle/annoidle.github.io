@@ -1,29 +1,29 @@
 'use strict';
 
 describe("Player suite", function() {
-	var playerData;
+	var player;
 	var buildings;
 
 	beforeEach(function() {
 		angular.mock.module('indexApp.game');
-		inject(function(PlayerData, Buildings) {
-			playerData = PlayerData;
+		inject(function(Player, Buildings) {
+			player = Player;
 			buildings = Buildings;
 		});
 	});
 
 	describe("At the start of the application", function() {
 		it("player has 3k GOLD", function() {
-			expect(playerData.getResource('gold')).toBe(3000);
+			expect(player.get('resource','gold')).toBe(3000);
 		});
 		it("player has 3k WOOD", function() {
-			expect(playerData.getResource('wood')).toBe(3000);
+			expect(player.get('resource','wood')).toBe(3000);
 		});
 		it("player has 3k TOOLS", function() {
-			expect(playerData.getResource('tool')).toBe(3000);
+			expect(player.get('resource','tool')).toBe(3000);
 		});
 		it("player has 0 HOUSES", function() {
-			expect(playerData.getBuilding('house')).toBe(0);
+			expect(player.get('building','house')).toBe(0);
 		});
 	});
 
@@ -50,27 +50,27 @@ describe("Player suite", function() {
 
 
 		it("player gain a house", function() {
-			playerData.buy('house', 1);
-			expect(playerData.getBuilding('house')).toBe(1);
+			player.buy('house', 1);
+			expect(player.get('building','house')).toBe(1);
 		});
 
 		it("player loses 3 WOOD", function() {
-			playerData.buy('house', 1);
-			expect(playerData.getResource('wood')).toBe(3000 - 3);
+			player.buy('house', 1);
+			expect(player.get('resource','wood')).toBe(3000 - 3);
 		});
 
 		it("alerts registed HOUSES observers", function() {
-			playerData.addObserver('house', alertable.housesUpdated);
-			playerData.addObserver('house', alertable2.housesUpdated);
-			playerData.buy('house', 1);
+			player.addObserver('house', alertable.housesUpdated);
+			player.addObserver('house', alertable2.housesUpdated);
+			player.buy('house', 1);
 			expect(alertable.housesUpdated).toHaveBeenCalled();
 			expect(alertable2.housesUpdated).toHaveBeenCalled();
 		});
 
 		it("alerts registed WOOD observers", function() {
-			playerData.addObserver('wood', alertable.woodUpdated);
-			playerData.addObserver('wood', alertable2.woodUpdated);
-			playerData.buy('house', 1);
+			player.addObserver('wood', alertable.woodUpdated);
+			player.addObserver('wood', alertable2.woodUpdated);
+			player.buy('house', 1);
 			expect(alertable.woodUpdated).toHaveBeenCalled();
 			expect(alertable2.woodUpdated).toHaveBeenCalled();
 		});
@@ -78,13 +78,13 @@ describe("Player suite", function() {
 
 	describe("When you buy a lumberjacks hut", function() {
 		it("gives you a lumberjacks hut", function() {
-			playerData.buy('lumberjacksHut', 1);
-			expect(playerData.getBuilding('lumberjacksHut')).toBe(1);
+			player.buy('lumberjacksHut', 1);
+			expect(player.get('building','lumberjacksHut')).toBe(1);
 		});
 		it("you lose 50 gold and 2 tools", function() {
-			playerData.buy('lumberjacksHut', 1);
-			expect(playerData.getResource('gold')).toBe(3000 - 50);
-			expect(playerData.getResource('tool')).toBe(3000 - 2);
+			player.buy('lumberjacksHut', 1);
+			expect(player.get('resource','gold')).toBe(3000 - 50);
+			expect(player.get('resource','tool')).toBe(3000 - 2);
 		});
 	});
 

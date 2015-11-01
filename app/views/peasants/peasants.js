@@ -1,6 +1,6 @@
-var module = angular.module('indexApp.peasants', ['indexApp.game']);
+var module = angular.module('indexApp.peasants', ['indexApp.game', 'indexApp.controller_enricher']);
 
-module.controller('PeasantsController', ['PlayerData', 'Buildings', 'ControllerEnricher', function(PlayerData, Buildings, ControllerEnricher) {
+module.controller('PeasantsController', ['Player', 'Buildings', 'ControllerEnricher', function(Player, Buildings, ControllerEnricher) {
 
 	var isPositiveInteger = function(number) {
 		return !isNaN(number) && parseInt(number) == number;
@@ -8,7 +8,7 @@ module.controller('PeasantsController', ['PlayerData', 'Buildings', 'ControllerE
 
 	this.buy = function(building, numberToBuy) {
 		if (isPositiveInteger(numberToBuy)) {
-			PlayerData.buy(building, parseInt(numberToBuy));
+			Player.buy(building, parseInt(numberToBuy));
 		}
 	};
 
