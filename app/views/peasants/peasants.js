@@ -1,8 +1,6 @@
 var module = angular.module('indexApp.peasants', ['indexApp.game']);
 
-module.controller('PeasantsController', ['$scope', 'PlayerData', 'Buildings', function($scope, PlayerData, Buildings) {
-
-	var controller = this;
+module.controller('PeasantsController', ['PlayerData', 'Buildings', 'ControllerEnricher', function(PlayerData, Buildings, ControllerEnricher) {
 
 	var isPositiveInteger = function(number) {
 		return !isNaN(number) && parseInt(number) == number;
@@ -12,17 +10,7 @@ module.controller('PeasantsController', ['$scope', 'PlayerData', 'Buildings', fu
 		if (isPositiveInteger(numberToBuy)) {
 			PlayerData.buy(building, parseInt(numberToBuy));
 		}
-	}
+	};
 
-	this.buildings = Buildings.getBuildings();
-
-	this.buildings.forEach(function(building) {
-		var functionName = building + 'Updated';
-		controller[functionName] = function() {
-			$scope.peasants[building] = PlayerData.getBuilding(building);
-		};
-		PlayerData.addObserver(building, controller[functionName]);
-
-		controller[building] = PlayerData.getBuilding(building);
-	});
+	ControllerEnricher.enrich(this, Buildings.getBuildings(), 'building');
 }]);

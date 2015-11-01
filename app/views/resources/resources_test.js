@@ -15,6 +15,7 @@ describe("Resources suite", function() {
 			});
 		});
 		scope.resources = resourceCtrl;
+		spyOn(playerData, 'addObserver').and.callThrough();
 	});
 
 	describe("At the start of the application", function() {
@@ -22,4 +23,5 @@ describe("Resources suite", function() {
 			expect(resourceCtrl.gold).toBe(3000);
 		});
 	});
+
 });
