@@ -14,16 +14,16 @@ describe("Player suite", function() {
 
 	describe("At the start of the application", function() {
 		it("player has 3k GOLD", function() {
-			expect(player.get('resource','gold')).toBe(3000);
+			expect(player.get('resource', 'gold')).toBe(3000);
 		});
 		it("player has 3k WOOD", function() {
-			expect(player.get('resource','wood')).toBe(3000);
+			expect(player.get('resource', 'wood')).toBe(3000);
 		});
 		it("player has 3k TOOLS", function() {
-			expect(player.get('resource','tool')).toBe(3000);
+			expect(player.get('resource', 'tool')).toBe(3000);
 		});
 		it("player has 0 HOUSES", function() {
-			expect(player.get('building','house')).toBe(0);
+			expect(player.get('building', 'house')).toBe(0);
 		});
 	});
 
@@ -51,12 +51,12 @@ describe("Player suite", function() {
 
 		it("player gain a house", function() {
 			player.buy('house', 1);
-			expect(player.get('building','house')).toBe(1);
+			expect(player.get('building', 'house')).toBe(1);
 		});
 
 		it("player loses 3 WOOD", function() {
 			player.buy('house', 1);
-			expect(player.get('resource','wood')).toBe(3000 - 3);
+			expect(player.get('resource', 'wood')).toBe(3000 - 3);
 		});
 
 		it("alerts registed HOUSES observers", function() {
@@ -79,15 +79,14 @@ describe("Player suite", function() {
 	describe("When you buy a lumberjacks hut", function() {
 		it("gives you a lumberjacks hut", function() {
 			player.buy('lumberjacksHut', 1);
-			expect(player.get('building','lumberjacksHut')).toBe(1);
+			expect(player.get('building', 'lumberjacksHut')).toBe(1);
 		});
 		it("you lose 50 gold and 2 tools", function() {
 			player.buy('lumberjacksHut', 1);
-			expect(player.get('resource','gold')).toBe(3000 - 50);
-			expect(player.get('resource','tool')).toBe(3000 - 2);
+			expect(player.get('resource', 'gold')).toBe(3000 - 50);
+			expect(player.get('resource', 'tool')).toBe(3000 - 2);
 		});
 	});
-
 
 	describe("When one ask for the list of buildings", function() {
 		it("house is part of the list", function() {
@@ -95,6 +94,42 @@ describe("Player suite", function() {
 			var index = buildingsList.indexOf('house');
 			expect(index).toBeDefined();
 			expect().not.toBe(-1);
+		});
+	});
+
+	describe("When tick", function() {
+		it("add 0.025 wood if one LumberjacksHut", function() {
+			player.buy('lumberjacksHut', 1);
+			player.tick();
+			expect(player.get('resource', 'wood')).toEqual(3000 + 0.025);
+		});
+		it("add 0.05 wood if two LumberjacksHut", function() {
+			player.buy('lumberjacksHut', 2);
+			player.tick();
+			expect(player.get('resource', 'wood')).toEqual(3000 + 0.05);
+		});
+		it("notifies woodUpdated", function() {
+			var alertable = {
+				woodUpdated: function(value) {}
+			};
+			spyOn(alertable, 'woodUpdated');
+			player.addObserver('wood', alertable.woodUpdated);
+			player.buy('lumberjacksHut', 2);
+			
+			player.tick();
+			
+			expect(alertable.woodUpdated).toHaveBeenCalled();
+		});
+		it("does not notify if no change", function() {
+			var alertable = {
+				woodUpdated: function(value) {}
+			};
+			spyOn(alertable, 'woodUpdated');
+			player.addObserver('wood', alertable.woodUpdated);
+			
+			player.tick();
+			
+			expect(alertable.woodUpdated).not.toHaveBeenCalled();
 		});
 	});
 

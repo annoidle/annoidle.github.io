@@ -44,7 +44,18 @@ module.service('Player', function(Buildings) {
 		notify(buildingKey);
 	}
 
+	var tick = function() {
+		var lumberjacksHutOwned = player['building']['lumberjacksHut'];
+		if (lumberjacksHutOwned > 0) {
+			player['resource']['wood'] += 0.025 * player['building']['lumberjacksHut'];
+			notify('wood');
+		}
+	};
+
 	return {
+		tick: function() {
+			tick();
+		},
 		buy: function(buildingKey, amount) {
 			buy(buildingKey, amount);
 		},
