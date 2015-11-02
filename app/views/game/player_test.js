@@ -86,6 +86,11 @@ describe("Player suite", function() {
 			expect(player.get('resource', 'gold')).toBe(3000 - 50);
 			expect(player.get('resource', 'tool')).toBe(3000 - 2);
 		});
+		it("does not buy if not enough gold", function(){
+			player.set('resource', 'gold', 49);
+			player.buy('lumberjacksHut', 1);
+			expect(player.get('building', 'lumberjacksHut')).toBe(0);
+		});
 	});
 
 	describe("When one ask for the list of buildings", function() {
